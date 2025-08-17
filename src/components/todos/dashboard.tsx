@@ -44,7 +44,7 @@ export default function AnalyticsPage() {
   const completionRate = ((completedCount / todos.length) * 100).toFixed(1);
 
   return (
-    <div className="container mx-auto">
+    <>
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
           Analytics Dashboard
@@ -112,6 +112,6 @@ export default function AnalyticsPage() {
         <TodoPieChart todos={todos} />
         <TodoBarChart todos={todos} />
       </div>
-    </div>
+    </>
   );
 }

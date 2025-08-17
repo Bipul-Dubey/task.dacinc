@@ -1,8 +1,9 @@
-// Book Search Page
-// Search for books, show results, pagination, and modal details
-
 import BookMain from "@/components/books";
 
 export default function BookSearchPage() {
-  return <BookMain />;
+  return (
+    <div className="p-6">
+      <BookMain />
+    </div>
+  );
 }

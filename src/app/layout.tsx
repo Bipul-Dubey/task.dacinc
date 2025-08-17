@@ -1,6 +1,8 @@
 import ReactQueryClientProvider from "@/components/providers";
 import "./globals.css";
 import Link from "next/link";
+import Header from "./Header";
+import { GradientContainer } from "@/components/common/Background";
 
 export const metadata = {
   title: "Dashboard + Books",
@@ -13,18 +15,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ReactQueryClientProvider>
-      <html lang="en">
-        <body>
-          <header style={{ padding: 16, borderBottom: "1px solid #eee" }}>
-            <nav style={{ display: "flex", gap: 16 }}>
-              <Link href="/todos">Todos</Link>
-              <Link href="/books">Books</Link>
-            </nav>
-          </header>
-          <main style={{ padding: 16 }}>{children}</main>
-        </body>
-      </html>
-    </ReactQueryClientProvider>
+    <html lang="en" className="dark">
+      <body>
+        <ReactQueryClientProvider>
+          <Header />
+          <main>
+            <GradientContainer>{children}</GradientContainer>
+          </main>
+        </ReactQueryClientProvider>
+      </body>
+    </html>
   );
 }
