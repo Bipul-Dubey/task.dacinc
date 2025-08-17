@@ -4,6 +4,7 @@ import React from "react";
 import { IBook } from "@/types";
 import { X, Calendar, BookOpen, User } from "lucide-react";
 import { getCoverUrl } from "@/libs/utils";
+import Image from "next/image";
 
 interface BookModalProps {
   book: IBook | null;
@@ -29,8 +30,8 @@ export function BookModal({ book, isOpen, onClose }: BookModalProps) {
   const editions =
     typeof book.edition_count === "number" ? book.edition_count : undefined;
 
-  const languages = Array.isArray((book as any).language)
-    ? ((book as any).language as string[])
+  const languages = Array.isArray((book as IBook).language)
+    ? ((book as IBook).language as string[])
     : [];
 
   return (
@@ -69,8 +70,11 @@ export function BookModal({ book, isOpen, onClose }: BookModalProps) {
             <div className="mx-auto md:mx-0 md:sticky md:top-8">
               <div className="relative aspect-[2/3] w-[220px] md:w-[240px] overflow-hidden rounded-xl bg-gray-100 ring-1 ring-gray-200">
                 {coverUrl ? (
-                  <img
+                  <Image
+                    height={360}
+                    width={220}
                     src={coverUrl}
+                    loader={() => coverUrl}
                     alt={book.title}
                     className="h-full w-full object-cover"
                     onError={(e) => {

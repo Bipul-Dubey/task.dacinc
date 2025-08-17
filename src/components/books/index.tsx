@@ -43,7 +43,7 @@ export default function BooksPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const totalPages = Math.max(1, Math.ceil(numFound / BOOKS_PER_PAGE));
+  // const totalPages = Math.max(1, Math.ceil(numFound / BOOKS_PER_PAGE));
 
   return (
     <div className="container mx-auto">
@@ -81,7 +81,7 @@ export default function BooksPage() {
       {!isLoading && !error && docs.length === 0 && searchQuery?.trim() && (
         <div className="text-center py-8">
           <p className="text-gray-600 mb-4">
-            No books found for "{searchQuery}"
+            No books found for :{searchQuery}
           </p>
           <p className="text-sm text-gray-500">
             Try different keywords or check your spelling

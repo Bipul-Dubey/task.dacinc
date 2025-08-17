@@ -1,6 +1,5 @@
 import ReactQueryClientProvider from "@/components/providers";
 import "./globals.css";
-import Link from "next/link";
 import Header from "./Header";
 import { GradientContainer } from "@/components/common/Background";
 

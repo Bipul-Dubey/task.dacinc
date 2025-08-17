@@ -3,6 +3,7 @@
 import { getCoverUrl } from "@/libs/utils";
 import { IBook } from "@/types";
 import { Calendar, User, BookOpen } from "lucide-react";
+import Image from "next/image";
 
 interface BookCardProps {
   book: IBook;
@@ -18,14 +19,21 @@ export function BookCard({ book, onClick }: BookCardProps) {
       className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer border border-gray-200 hover:border-blue-300"
     >
       <div className="flex gap-4">
-        {coverUrl && (
+        {coverUrl ? (
           <div className="flex-shrink-0">
-            <img
+            <Image
+              height={160}
+              width={120}
+              loader={() => coverUrl}
               src={coverUrl}
               alt={book.title}
               className="w-16 h-24 object-cover rounded"
               loading="lazy"
             />
+          </div>
+        ) : (
+          <div className="flex h-24 w-16 items-center justify-center bg-gray-100 ring-1 ring-gray-200 rounded text-center text-gray-400">
+            No cover
           </div>
         )}
         <div className="flex-1 min-w-0">
