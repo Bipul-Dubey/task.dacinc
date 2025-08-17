@@ -1,5 +1,6 @@
 "use client";
 
+import { getCoverUrl } from "@/libs/utils";
 import { IBook } from "@/types";
 import { Calendar, User, BookOpen } from "lucide-react";
 
@@ -9,9 +10,7 @@ interface BookCardProps {
 }
 
 export function BookCard({ book, onClick }: BookCardProps) {
-  const coverUrl = book.cover_i
-    ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
-    : null;
+  const coverUrl = getCoverUrl(book);
 
   return (
     <div

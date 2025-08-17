@@ -3,6 +3,7 @@
 import React from "react";
 import { IBook } from "@/types";
 import { X, Calendar, BookOpen, User } from "lucide-react";
+import { getCoverUrl } from "@/libs/utils";
 
 interface BookModalProps {
   book: IBook | null;
@@ -13,9 +14,7 @@ interface BookModalProps {
 export function BookModal({ book, isOpen, onClose }: BookModalProps) {
   if (!isOpen || !book) return null;
 
-  const coverUrl = book.cover_i
-    ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
-    : null;
+  const coverUrl = getCoverUrl(book);
 
   const firstAuthor =
     Array.isArray(book.author_name) && book.author_name.length > 0
@@ -146,9 +145,6 @@ export function BookModal({ book, isOpen, onClose }: BookModalProps) {
             </div>
           </div>
         </div>
-
-        {/* Bottom accent */}
-        <div className="h-3 w-full bg-gradient-to-t from-gray-50 to-transparent" />
       </div>
     </div>
   );

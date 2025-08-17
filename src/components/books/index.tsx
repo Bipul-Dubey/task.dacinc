@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import { Search } from "lucide-react";
 import { IBook, BookSearchResponse } from "@/types";
 import { searchBooks } from "@/apis";
-import { useDebounce } from "@/libs/hooks/useDebounce";
 import { BookSearchForm } from "./BookSearchForm";
 import Loader from "../common/Loader";
 import { BookModal } from "./BookModal";
@@ -20,19 +19,10 @@ export default function BooksPage() {
   const [selectedBook, setSelectedBook] = useState<IBook | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const debouncedSearchQuery = useDebounce(searchQuery, 300);
-
-  // Choose one behavior:
-  // 1) Default query when empty (API helper already handles default)
-  const enableQuery = true;
-
-  // 2) Or disable fetch until non-empty:
-  // const enableQuery = !!debouncedSearchQuery?.trim();
-
   const { data, isLoading, error } = useQuery<BookSearchResponse>({
-    queryKey: ["books", debouncedSearchQuery, currentPage],
-    queryFn: () => searchBooks(debouncedSearchQuery, currentPage),
-    enabled: enableQuery,
+    queryKey: ["books", searchQuery, currentPage],
+    queryFn: () => searchBooks(searchQuery, currentPage),
+    enabled: searchQuery.trim().length > 0,
   });
 
   const docs = data?.docs ?? [];
@@ -64,10 +54,9 @@ export default function BooksPage() {
         </p>
       </div>
 
-      <BookSearchForm onSearch={handleSearch} initialQuery={searchQuery} />
+      <BookSearchForm onSearch={handleSearch} />
 
-      {!enableQuery ||
-      (!debouncedSearchQuery?.trim() && docs.length === 0 && !isLoading) ? (
+      {!searchQuery?.trim() && docs.length === 0 && !isLoading ? (
         <div className="text-center py-12">
           <Search className="h-16 w-16 text-gray-300 mx-auto mb-4" />
           <h3 className="text-lg font-medium text-gray-900 mb-2">
@@ -89,19 +78,16 @@ export default function BooksPage() {
         </div>
       )}
 
-      {!isLoading &&
-        !error &&
-        docs.length === 0 &&
-        debouncedSearchQuery?.trim() && (
-          <div className="text-center py-8">
-            <p className="text-gray-600 mb-4">
-              No books found for "{debouncedSearchQuery}"
-            </p>
-            <p className="text-sm text-gray-500">
-              Try different keywords or check your spelling
-            </p>
-          </div>
-        )}
+      {!isLoading && !error && docs.length === 0 && searchQuery?.trim() && (
+        <div className="text-center py-8">
+          <p className="text-gray-600 mb-4">
+            No books found for "{searchQuery}"
+          </p>
+          <p className="text-sm text-gray-500">
+            Try different keywords or check your spelling
+          </p>
+        </div>
+      )}
 
       {docs.length > 0 && (
         <>

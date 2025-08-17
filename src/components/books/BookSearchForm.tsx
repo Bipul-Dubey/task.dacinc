@@ -12,20 +12,30 @@ export function BookSearchForm({
   onSearch,
   initialQuery = "",
 }: BookSearchFormProps) {
+  const [query, setQuery] = useState(initialQuery);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSearch(query.trim());
+  };
+
   return (
-    <div className="w-full max-w-2xl mx-auto mb-8">
+    <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto mb-8">
       <div className="relative">
         <input
           type="text"
-          value={initialQuery}
-          onChange={(e) => onSearch(e.target.value)}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
           placeholder="Search for books (e.g., Harry Potter, JavaScript, History)..."
           className="w-full px-4 py-3 pr-12 text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
-        <div className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-gray-500 hover:text-blue-600 transition-colors">
+        <button
+          type="submit"
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-gray-500 hover:text-blue-600 transition-colors"
+        >
           <Search className="h-5 w-5" />
-        </div>
+        </button>
       </div>
-    </div>
+    </form>
   );
 }
